@@ -1,15 +1,14 @@
-
-require 'pry'
 class TicTacToe::Board
 
   X_MARKER = 'X'
   O_MARKER = 'O'
   CENTER = 4
 
-  attr_accessor :board
+  attr_accessor :board, :size
 
-  def initialize
-    @board =  %w(0 1 2 3 4 5 6 7 8)
+  def initialize(size)
+    @size = size
+    @board = ('0'..((@size*@size) -1).to_s).to_a
   end
 
   def add_marker_at(spot, marker)
@@ -40,7 +39,7 @@ class TicTacToe::Board
   end
 
   def game_is_over?
-    horizontal_win? || vertical_win? || diagonal_win?
+    horizontal_win? || vertical_win? || diagonal_a_win? || diagonal_b_win?
   end
 
   def valid?(spot)
@@ -62,19 +61,44 @@ class TicTacToe::Board
   end
 
   def horizontal_win?
-    [board[0], board[1], board[2]].uniq.length == 1 ||
-    [board[3], board[4], board[5]].uniq.length == 1 ||
-    [board[6], board[7], board[8]].uniq.length == 1
+    size.times do |index|
+      line = []
+      index_line = index * size
+      size.times do |i|
+        line << board[i+index_line]
+      end
+
+      return true if line.uniq.length == 1
+    end
+    false
   end
 
   def vertical_win?
-    [board[0], board[3], board[6]].uniq.length == 1 ||
-    [board[1], board[4], board[7]].uniq.length == 1 ||
-    [board[2], board[5], board[8]].uniq.length == 1
+    size.times do |index|
+      line = []
+      size.times do |i|
+        line << board[(i * size) + index]
+      end
+      return true if line.uniq.length == 1
+    end
+    false
   end
 
-  def diagonal_win?
-    [board[0], board[4], board[8]].uniq.length == 1 ||
-    [board[2], board[4], board[6]].uniq.length == 1
+  def diagonal_a_win?
+    line = []
+    size.times do |i|
+      line << board[i + (i * size)]
+    end
+    return true if line.uniq.length == 1
+    false
+  end
+
+  def diagonal_b_win?
+    line = []
+    size.times do |i|
+      line << board[((i+1) * size) - (i+1)]
+    end
+    return true if line.uniq.length == 1
+    false
   end
 end

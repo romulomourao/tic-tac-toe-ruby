@@ -6,6 +6,7 @@ class TicTacToe::Menu
   PC = 3
   EASY = 1
   HARD = 2
+  SIZES = [3,4,5]
 
   def init
     select_game_mode
@@ -36,7 +37,7 @@ class TicTacToe::Menu
       retry
     end
 
-    TicTacToe::Game.new(player_one, player_two).start_game
+    TicTacToe::Game.new(player_one, player_two, select_board_size).start_game
 
   end
 
@@ -48,6 +49,20 @@ class TicTacToe::Menu
         :easy
       when HARD
         :hard
+      else
+        raise Output.invalid_entry
+      end
+    rescue
+      retry
+    end
+  end
+
+  def select_board_size
+    begin
+      Output.show_board_sizes(SIZES)
+      size = gets.chomp.to_i
+      if SIZES.include?(size)
+        size
       else
         raise Output.invalid_entry
       end

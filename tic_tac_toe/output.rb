@@ -15,6 +15,13 @@ class Output
       print 'Choose Mode:[1-3]  '.yellow
     end
 
+    def show_board_sizes(sizes)
+      sizes.length.times do |i|
+        size = sizes[i]
+        puts "Type #{size} for #{size}x#{size} board".green
+      end
+    end
+
     def show_levels
       puts "Select the game level:\n".blue
       puts "1 - EASY\n2 - HARD\n".blue

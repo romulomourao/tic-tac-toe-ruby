@@ -4,8 +4,8 @@ class TicTacToe::Game
 
   attr_accessor :current_player
   
-  def initialize(player_one, player_two)
-    @game_board = TicTacToe::Board.new
+  def initialize(player_one, player_two, board_width)
+    @game_board = TicTacToe::Board.new(board_width)
     @p1 = player_one 
     @p2 = player_two 
     @current_player = sort_first_player

@@ -24,9 +24,7 @@ class TicTacToe::Computer < TicTacToe::Player
 
   def get_best_move(game_board)
     game_board.available_spaces.each do |spot|
-      if can_win?(game_board, spot) || can_block?(game_board, spot)
-        return spot 
-      end
+      return spot if can_win?(game_board, spot) || can_block?(game_board, spot)
     end
     game_board.random_available_space
   end
@@ -53,5 +51,4 @@ class TicTacToe::Computer < TicTacToe::Player
       game_board.add_marker_at(spot, marker)
     end
   end
-
 end
